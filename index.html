@@ -18,11 +18,12 @@
 </head>
 <body>
 
-  <!-- ══ CURSOR MAGNÉTICO / REVELACIÓN ══ -->
+  <!-- ══ CURSOR MAGNÉTICO / CÍRCULO DE REVELACIÓN ══ -->
   <div class="cursor" id="cursor" aria-hidden="true">
-    <div class="cursor__ring circulo-cursor"></div>
     <div class="cursor__dot"></div>
   </div>
+  <!-- Círculo independiente: mix-blend-mode necesita estar fuera de wrappers con stacking -->
+  <div class="circulo-cursor" id="circulo-cursor" aria-hidden="true"></div>
 
   <!-- ══ LOADER ══ -->
   <div class="loader" id="loader">

@@ -92,7 +92,7 @@ body {
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* ══ CURSOR MAGNÉTICO / REVELACIÓN ══ */
+/* ══ CURSOR MAGNÉTICO / REVELACIÓN NEGATIVA ══ */
 body.has-custom-cursor,
 body.has-custom-cursor * {
   cursor: none !important;
@@ -104,100 +104,85 @@ body.has-custom-cursor * {
   width: 0;
   height: 0;
   pointer-events: none;
-  z-index: 9999;
-  /* Sin opacity aquí: rompería mix-blend-mode con el menú */
+  z-index: 10000;
 }
 
-.cursor__dot,
-.cursor__ring,
-.circulo-cursor {
+.cursor__dot {
   position: fixed;
   top: 0;
   left: 0;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
+  background: #ffffff;
   pointer-events: none;
-  will-change: transform;
   transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
   visibility: hidden;
+  z-index: 10001;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cursor.is-active .cursor__dot,
-.cursor.is-active .cursor__ring,
-.cursor.is-active .circulo-cursor {
+.cursor.is-active .cursor__dot {
   visibility: visible;
 }
 
 .cursor.is-hidden .cursor__dot,
-.cursor.is-hidden .cursor__ring,
-.cursor.is-hidden .circulo-cursor {
+.cursor.is-reveal .cursor__dot {
   visibility: hidden;
 }
 
-.cursor__dot {
-  width: 7px;
-  height: 7px;
-  background: #ffffff;
-  z-index: 2;
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.35s ease;
-}
-
-.cursor__ring,
-.circulo-cursor {
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  background: transparent;
-  z-index: 1;
-  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease,
-              background 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Hover interactivo: anillo medio */
 .cursor.is-hover .cursor__dot {
   width: 5px;
   height: 5px;
 }
 
-.cursor.is-hover .cursor__ring,
-.cursor.is-hover .circulo-cursor {
-  width: 72px;
-  height: 72px;
-  border-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.04);
+/*
+  Círculo blanco de revelación (referente):
+  mix-blend-mode: difference → sobre negro queda blanco;
+  donde cruza letras blancas, esa intersección se vuelve negra.
+*/
+.circulo-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%) scale(0.35);
+  /* Clave del referente: invierte solo la intersección con las letras */
+  mix-blend-mode: difference;
+  visibility: hidden;
+  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/*
-  Revelación editorial sobre el menú:
-  círculo blanco + mix-blend-mode: difference
-  → blanco sobre negro; letras invertidas en la intersección
-*/
-.cursor.is-reveal .cursor__dot {
-  width: 0;
-  height: 0;
+.circulo-cursor.is-ready {
+  visibility: visible;
+}
+
+.cursor.is-hidden ~ .circulo-cursor {
   visibility: hidden;
 }
 
-.cursor.is-reveal .cursor__ring,
-.cursor.is-reveal .circulo-cursor,
+/* Estado menú: círculo grande — letras negras solo dentro del círculo */
 .circulo-cursor.is-blend {
-  width: clamp(120px, 14vw, 168px);
-  height: clamp(120px, 14vw, 168px);
-  border-color: transparent;
-  background: #ffffff;
-  mix-blend-mode: difference;
+  width: clamp(140px, 16vw, 200px);
+  height: clamp(140px, 16vw, 200px);
 }
 
-/* Aislar fondos/fotos para que el blend impacte sobre todo tipografía */
+/* Aislar fotos/UI para que el negativo se lea sobre tipografía */
 .home-slideshow,
 .slideshow-overlay,
 .hero-firma,
 .category-loop-viewport,
 .gallery-grid,
-.whatsapp-fab {
+.whatsapp-fab,
+.lightbox {
   isolation: isolate;
 }
 
@@ -437,14 +422,15 @@ body.has-custom-cursor * {
 }
 .main-menu .menu-item {
   font-family: var(--font-sans);
-  font-weight: 100;
+  font-weight: 300;
   font-size: clamp(2.4rem, 6vw, 5rem);
-  color: rgba(255, 255, 255, 0.4);
+  /* Color sólido (no rgba): necesario para el corte negro limpio con difference */
+  color: #5a5a5a;
   text-decoration: none;
   letter-spacing: 0.04em;
   line-height: 0.95;
   text-transform: uppercase;
-  transition: color 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
               font-family 0.01s linear,
               font-style 0.01s linear,

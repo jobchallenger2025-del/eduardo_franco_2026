@@ -153,29 +153,28 @@ class ContactForm {
 }
 
 /* ══════════════════════════════════════════════════
-   2. MAGNETIC CURSOR — punto + anillo con inercia
+   2. MAGNETIC CURSOR — punto + círculo difference
    ══════════════════════════════════════════════════ */
 class MagneticCursor {
   constructor() {
     this.el = $('#cursor');
     this.dot = this.el?.querySelector('.cursor__dot');
-    this.ring = this.el?.querySelector('.cursor__ring, .circulo-cursor');
-    if (!this.el || !this.dot || !this.ring) return;
+    this.circle = $('#circulo-cursor');
+    if (!this.el || !this.dot || !this.circle) return;
 
     this.mouse = { x: -100, y: -100 };
     this.dotPos = { x: -100, y: -100 };
-    this.ringPos = { x: -100, y: -100 };
-    this.dotEase = 0.38;
-    this.ringEase = 0.12;
+    this.circlePos = { x: -100, y: -100 };
+    this.dotEase = 0.4;
+    this.circleEase = 0.11;
     this.magnet = { x: 0, y: 0 };
     this.targetMagnet = { x: 0, y: 0 };
     this.activeTarget = null;
     this.hasMoved = false;
+    this.blend = false;
 
-    this.revealSelector = '.menu-item, .nav-link';
+    this.revealSelector = '.main-menu, .menu-item, .hero-right';
     this.hoverSelector = [
-      '.menu-item',
-      '.nav-link',
       '.filter-btn',
       '.top-right-btn',
       '.bottom-link',
@@ -196,10 +195,12 @@ class MagneticCursor {
 
     if (this.reducedMotion || this.coarsePointer) {
       this.el.style.display = 'none';
+      this.circle.style.display = 'none';
       return;
     }
 
     document.body.classList.add('has-custom-cursor');
+    this.circle.classList.add('is-ready');
     this._bind();
     this._loop();
   }
@@ -213,51 +214,58 @@ class MagneticCursor {
         this.hasMoved = true;
         this.dotPos.x = e.clientX;
         this.dotPos.y = e.clientY;
-        this.ringPos.x = e.clientX;
-        this.ringPos.y = e.clientY;
+        this.circlePos.x = e.clientX;
+        this.circlePos.y = e.clientY;
         this.el.classList.add('is-active');
       }
 
+      this._resolveState(e.target);
       this._updateMagnet(e.clientX, e.clientY);
     }, { passive: true });
 
     document.addEventListener('mouseleave', () => {
       this.el.classList.add('is-hidden');
+      this.circle.style.visibility = 'hidden';
     });
 
     document.addEventListener('mouseenter', () => {
       this.el.classList.remove('is-hidden');
+      this.circle.style.visibility = '';
     });
+  }
 
-    document.body.addEventListener('mouseover', (e) => {
-      const reveal = e.target.closest?.(this.revealSelector);
-      const hover = e.target.closest?.(this.hoverSelector);
+  _resolveState(target) {
+    const reveal = target?.closest?.(this.revealSelector);
+    const menuItem = target?.closest?.('.menu-item');
+    const hover = !reveal && target?.closest?.(this.hoverSelector);
 
-      if (reveal) {
-        this.el.classList.add('is-reveal');
-        this.el.classList.remove('is-hover');
-        this.ring.classList.add('is-blend');
-        this._setTarget(reveal);
-        return;
-      }
+    if (reveal) {
+      this.blend = true;
+      this.el.classList.add('is-reveal');
+      this.el.classList.remove('is-hover');
+      this.circle.classList.add('is-blend');
+      this._setTarget(menuItem || reveal.querySelector?.('.menu-item') || reveal);
+      return;
+    }
 
-      if (hover) {
-        this.el.classList.add('is-hover');
-        this.el.classList.remove('is-reveal');
-        this.ring.classList.remove('is-blend');
-        this._setTarget(hover);
-        return;
-      }
+    if (hover) {
+      this.blend = false;
+      this.el.classList.add('is-hover');
+      this.el.classList.remove('is-reveal');
+      this.circle.classList.remove('is-blend');
+      this._setTarget(hover);
+      return;
+    }
 
-      this.el.classList.remove('is-hover', 'is-reveal');
-      this.ring.classList.remove('is-blend');
-      this._setTarget(null);
-    }, true);
+    this.blend = false;
+    this.el.classList.remove('is-hover', 'is-reveal');
+    this.circle.classList.remove('is-blend');
+    this._setTarget(null);
   }
 
   _setTarget(el) {
     if (this.activeTarget && this.activeTarget !== el) {
-      this.activeTarget.classList.remove('is-cursor-target');
+      this.activeTarget.classList?.remove('is-cursor-target');
     }
     this.activeTarget = el;
     if (el?.classList?.contains('menu-item')) {
@@ -266,7 +274,7 @@ class MagneticCursor {
   }
 
   _updateMagnet(x, y) {
-    if (!this.activeTarget) {
+    if (!this.activeTarget || !this.activeTarget.getBoundingClientRect) {
       this.targetMagnet.x = 0;
       this.targetMagnet.y = 0;
       return;
@@ -275,28 +283,30 @@ class MagneticCursor {
     const rect = this.activeTarget.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const strength = this.el.classList.contains('is-reveal') ? 0.22 : 0.14;
+    const strength = this.blend ? 0.18 : 0.12;
 
     this.targetMagnet.x = (cx - x) * strength;
     this.targetMagnet.y = (cy - y) * strength;
   }
 
   _loop() {
-    this.magnet.x += (this.targetMagnet.x - this.magnet.x) * 0.16;
-    this.magnet.y += (this.targetMagnet.y - this.magnet.y) * 0.16;
+    this.magnet.x += (this.targetMagnet.x - this.magnet.x) * 0.14;
+    this.magnet.y += (this.targetMagnet.y - this.magnet.y) * 0.14;
 
     const targetX = this.mouse.x + this.magnet.x;
     const targetY = this.mouse.y + this.magnet.y;
 
     this.dotPos.x += (targetX - this.dotPos.x) * this.dotEase;
     this.dotPos.y += (targetY - this.dotPos.y) * this.dotEase;
-    this.ringPos.x += (targetX - this.ringPos.x) * this.ringEase;
-    this.ringPos.y += (targetY - this.ringPos.y) * this.ringEase;
+    this.circlePos.x += (targetX - this.circlePos.x) * this.circleEase;
+    this.circlePos.y += (targetY - this.circlePos.y) * this.circleEase;
 
     this.dot.style.transform =
       `translate3d(${this.dotPos.x}px, ${this.dotPos.y}px, 0) translate(-50%, -50%)`;
-    this.ring.style.transform =
-      `translate3d(${this.ringPos.x}px, ${this.ringPos.y}px, 0) translate(-50%, -50%)`;
+
+    const scale = this.blend ? 1 : 0.35;
+    this.circle.style.transform =
+      `translate3d(${this.circlePos.x}px, ${this.circlePos.y}px, 0) translate(-50%, -50%) scale(${scale})`;
 
     requestAnimationFrame(() => this._loop());
   }
