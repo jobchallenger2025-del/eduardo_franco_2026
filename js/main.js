@@ -640,21 +640,17 @@ class AppNavigation {
 }
 
 /* ══════════════════════════════════════════════════
-   6. FAVICON + TÍTULO EN LOOP (izquierda → derecha)
+   6. TÍTULO EN LOOP (lectura lenta)
    ══════════════════════════════════════════════════ */
-class FaviconBrandLoop {
+class TitleBrandLoop {
   constructor() {
     this.text = 'Eduardo Franco — Fotógrafo Profesional';
     this.gap = '     •     ';
     this.marquee = `${this.text}${this.gap}`;
     this.titlePos = 0;
-    this.scrollX = 0;
-    this.fps = 14;
+    this.stepMs = 320;
     this.lastFrame = 0;
-
-    // Lienzo ancho: icono + texto desplazándose juntos
-    this.width = 256;
-    this.height = 64;
+    this.windowSize = Math.min(36, this.marquee.length);
 
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (this.reducedMotion) {
@@ -662,86 +658,22 @@ class FaviconBrandLoop {
       return;
     }
 
-    this.canvas = document.createElement('canvas');
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
-    this.ctx = this.canvas.getContext('2d');
+    // Quitar cualquier favicon previo (imagen animada / SVG)
+    $$('link[rel="icon"], link[rel="shortcut icon"]').forEach(link => link.remove());
 
-    this.link = document.querySelector('link[rel="icon"]');
-    if (!this.link) {
-      this.link = document.createElement('link');
-      this.link.rel = 'icon';
-      document.head.appendChild(this.link);
-    }
-
-    this.icon = new Image();
-    this.icon.decoding = 'async';
-    this.icon.onload = () => {
-      this.bandWidth = this._measureBand();
-      this.scrollX = -this.bandWidth;
-      this._loop(performance.now());
-    };
-    this.icon.onerror = () => {
-      this.bandWidth = this._measureBand();
-      this.scrollX = -this.bandWidth;
-      this._loop(performance.now());
-    };
-    this.icon.src = 'css/favicon/favicon_eduardo.svg';
-  }
-
-  _measureBand() {
-    const ctx = this.ctx;
-    ctx.font = '600 28px Poppins, sans-serif';
-    const textW = ctx.measureText(this.marquee).width;
-    const iconSlot = 56;
-    return iconSlot + 12 + textW;
+    this._loop(performance.now());
   }
 
   _updateTitle() {
     const doubled = this.marquee + this.marquee;
-    const windowSize = Math.min(30, this.marquee.length);
-    document.title = doubled.substring(this.titlePos, this.titlePos + windowSize);
+    document.title = doubled.substring(this.titlePos, this.titlePos + this.windowSize);
     this.titlePos = (this.titlePos + 1) % this.marquee.length;
   }
 
-  _drawFavicon() {
-    const { ctx, width, height, icon, scrollX, marquee } = this;
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, width, height);
-
-    const iconSlot = 56;
-    const iconPad = 8;
-    const drawBand = (x) => {
-      if (icon && icon.complete && icon.naturalWidth) {
-        const iw = iconSlot - iconPad;
-        const ih = iw * (icon.naturalHeight / icon.naturalWidth);
-        const iy = (height - ih) / 2;
-        ctx.drawImage(icon, x + iconPad / 2, iy, iw, ih);
-      }
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '600 28px Poppins, sans-serif';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(marquee, x + iconSlot + 10, height / 2);
-    };
-
-    // Dos bandas para loop continuo izquierda → derecha
-    drawBand(scrollX);
-    drawBand(scrollX + this.bandWidth);
-
-    this.link.type = 'image/png';
-    this.link.href = this.canvas.toDataURL('image/png');
-
-    this.scrollX += 3;
-    if (this.scrollX >= 0) this.scrollX -= this.bandWidth;
-  }
-
   _loop(timestamp) {
-    if (timestamp - this.lastFrame >= 1000 / this.fps) {
+    if (timestamp - this.lastFrame >= this.stepMs) {
       this.lastFrame = timestamp;
       this._updateTitle();
-      this._drawFavicon();
     }
     requestAnimationFrame((t) => this._loop(t));
   }
@@ -751,8 +683,8 @@ class FaviconBrandLoop {
    BOOTSTRAP
    ══════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  // Favicon + título animados (loop)
-  new FaviconBrandLoop();
+  // Título animado (lectura lenta, sin favicon)
+  new TitleBrandLoop();
 
   // Inicializar cursor magnético
   new MagneticCursor();
