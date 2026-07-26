@@ -1030,21 +1030,24 @@ body.on-contact .top-right-btn:hover {
 
 .whatsapp-fab__icon {
   flex-shrink: 0;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.55rem;
+  height: 1.55rem;
   margin: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.92);
   line-height: 0;
+  overflow: hidden;
+  border-radius: 50%;
 }
 
-.whatsapp-fab__icon svg {
-  width: 1.4rem;
-  height: 1.4rem;
+.whatsapp-fab__icon img {
+  width: 100%;
+  height: 100%;
   display: block;
-  overflow: visible;
+  object-fit: cover;
+  /* PNG blanco sobre negro: el negro se funde en el fondo oscuro */
+  mix-blend-mode: lighten;
 }
 
 .whatsapp-fab:hover .whatsapp-fab__pill,
@@ -1097,8 +1100,10 @@ body.on-contact .whatsapp-fab__label {
   color: rgba(0, 0, 0, 0.78);
 }
 
-body.on-contact .whatsapp-fab__icon {
-  color: rgba(0, 0, 0, 0.88);
+body.on-contact .whatsapp-fab__icon img {
+  /* En Contacto (fondo claro): icono negro, fondo blanco del PNG se funde */
+  filter: invert(1);
+  mix-blend-mode: multiply;
 }
 
 body.on-contact .whatsapp-fab:hover .whatsapp-fab__pill,
