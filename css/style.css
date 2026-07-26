@@ -312,7 +312,7 @@ body {
   line-height: 1.35;
   letter-spacing: -0.03em;
   color: #c6c6c6;
-  text-transform: lowercase;
+  text-transform: none;
   margin: 0;
   display: block;
   will-change: transform, opacity;

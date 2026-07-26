@@ -254,7 +254,7 @@ class CategoryLoop {
     this.el = $('#category-loop');
     if (!this.el) return;
 
-    this.words = ['hotelería', 'alimentos', 'lugares', 'producto'];
+    this.words = ['Alimentos', 'Lugares', 'Hotelería', 'Producto', 'Life style'];
     this.index = 0;
     this.holdMs = 2200;
     this.animMs = 650;
