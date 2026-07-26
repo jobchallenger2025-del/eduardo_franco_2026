@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Eduardo Franco Photography — main.js v5.0
  * Layout: 4 Paneles Horizontales + Menú Interactivo + Slideshow + Bilingüe
  */
@@ -33,12 +33,14 @@ const TRANSLATIONS = {
     'title-manifesto': '02 — MANIFIESTO',
     'quote-manifesto': '"La fotografía no captura la realidad. La crea."',
     'desc-manifesto': 'El espacio visual de Eduardo Franco se centra en la estética de alta gama, el diseño editorial y la precisión comercial.',
-    'title-contact': '03 — CONTACTO',
-    'heading-contact': 'Empecemos algo.',
-    'label-email': 'Email',
-    'label-location': 'Ubicación',
-    'label-phone': 'Cel',
-    'val-location': 'Bogotá, Colombia',
+    'contact-meta-city': 'BOGOTÁ, COLOMBIA',
+    'contact-label-nombre': 'NOMBRE.',
+    'contact-label-correo': 'CORREO.',
+    'contact-label-mensaje': 'MENSAJE.',
+    'contact-ph-nombre': 'INGRESA TU NOMBRE',
+    'contact-ph-correo': 'INGRESA TU CORREO',
+    'contact-ph-mensaje': 'ESCRIBE TU MENSAJE',
+    'contact-submit': 'ENVIAR.',
     'credits-title': 'CRÉDITOS',
     'credits-p1': '© 2026 Eduardo Franco. Todos los derechos reservados.',
     'credits-p2': 'Concepto y diseño inspirado en el minimalismo editorial.',
@@ -66,12 +68,14 @@ const TRANSLATIONS = {
     'title-manifesto': '02 — MANIFESTO',
     'quote-manifesto': '"Photography does not capture reality. It creates it."',
     'desc-manifesto': 'Eduardo Franco\'s visual space focuses on high-end aesthetics, editorial design, and commercial precision.',
-    'title-contact': '03 — CONTACT',
-    'heading-contact': 'Let\'s start something.',
-    'label-email': 'Email',
-    'label-location': 'Location',
-    'label-phone': 'Cell',
-    'val-location': 'Bogota, Colombia',
+    'contact-meta-city': 'BOGOTA, COLOMBIA',
+    'contact-label-nombre': 'NAME.',
+    'contact-label-correo': 'EMAIL.',
+    'contact-label-mensaje': 'MESSAGE.',
+    'contact-ph-nombre': 'ENTER YOUR NAME',
+    'contact-ph-correo': 'ENTER YOUR EMAIL',
+    'contact-ph-mensaje': 'WRITE YOUR MESSAGE',
+    'contact-submit': 'SEND.',
     'credits-title': 'CREDITS',
     'credits-p1': '© 2026 Eduardo Franco. All rights reserved.',
     'credits-p2': 'Concept and design inspired by editorial minimalism.',
@@ -108,6 +112,44 @@ function translate(lang) {
     const text = TRANSLATIONS[lang][key];
     if (text) el.textContent = text;
   });
+
+  $$('[data-key-placeholder]').forEach(el => {
+    const key = el.dataset.keyPlaceholder;
+    const text = TRANSLATIONS[lang][key];
+    if (text) el.setAttribute('placeholder', text);
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   CONTACT FORM — mailto funcional
+   ══════════════════════════════════════════════════ */
+class ContactForm {
+  constructor() {
+    this.form = $('#contact-form');
+    if (!this.form) return;
+
+    this.form.addEventListener('submit', (e) => this._onSubmit(e));
+  }
+
+  _onSubmit(e) {
+    e.preventDefault();
+
+    const nombre = this.form.nombre?.value.trim() || '';
+    const correo = this.form.correo?.value.trim() || '';
+    const mensaje = this.form.mensaje?.value.trim() || '';
+
+    if (!nombre || !correo || !mensaje) {
+      this.form.reportValidity();
+      return;
+    }
+
+    const subject = encodeURIComponent(`Contacto web — ${nombre}`);
+    const body = encodeURIComponent(
+      `Nombre: ${nombre}\nCorreo: ${correo}\n\n${mensaje}`
+    );
+
+    window.location.href = `mailto:ceo@eduardofranco.com.co?subject=${subject}&body=${body}`;
+  }
 }
 
 /* ══════════════════════════════════════════════════
@@ -209,10 +251,10 @@ class BackgroundSlideshow {
     if (!this.container) return;
 
     this.images = [
-      '/fotografia/alimentos/albondigas.webp',
-      '/fotografia/hoteleria/fachada2.webp',
-      '/fotografia/lugares/cava_visual2.webp',
-      '/fotografia/alimentos/tomahawk.webp'
+      'https://eduardofranco.com.co/fotografia/alimentos/albondigas.webp',
+      'https://eduardofranco.com.co/fotografia/hoteleria/fachada2.webp',
+      'https://eduardofranco.com.co/fotografia/lugares/cava_visual2.webp',
+      'https://eduardofranco.com.co/fotografia/alimentos/tomahawk.webp'
     ];
 
     this.currentIndex = 0;
@@ -943,6 +985,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lightbox de la galería
     new GalleryLightbox();
+
+    // Formulario de contacto
+    new ContactForm();
     
     // Mostrar el botón superior derecho de forma fluida una vez cargada la página
     const toggleBtn = $('#menu-toggle-btn');

@@ -123,13 +123,66 @@
     </section>
 
     <!-- PANEL 4: CONTACTO -->
-    <section class="panel" id="panel-contacto">
-      <div class="contact-content">
-        <h2 data-key="title-contact">03 — CONTACTO</h2>
-        <h3 data-key="heading-contact">Empecemos algo.</h3>
-        <p class="contact-info-item"><span data-key="label-email">Email</span>: <a href="mailto:ceo@eduardofranco.com.co" class="contact-link">ceo@eduardofranco.com.co</a></p>
-        <p class="contact-info-item"><span data-key="label-location">Ubicación</span>: <span data-key="val-location">Bogotá, Colombia</span></p>
-        <p class="contact-info-item"><span data-key="label-phone">Cel</span>: <a href="tel:+573104700181" class="contact-link">3104700181</a></p>
+    <section class="panel panel-contact" id="panel-contacto" aria-label="Contacto">
+      <div class="contact-layout">
+        <aside class="contact-meta" aria-label="Datos de contacto">
+          <p class="contact-meta__name">EDUARDO FRANCO</p>
+          <p>
+            <a href="tel:+573104700181" class="contact-meta__link">Tel. 3104700181</a>
+          </p>
+          <p data-key="contact-meta-city">BOGOTÁ, COLOMBIA</p>
+          <p>
+            EMAIL:
+            <a href="mailto:ceo@eduardofranco.com.co" class="contact-meta__link">ceo@eduardofranco.com.co</a>
+          </p>
+        </aside>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="contact-field contact-field--sans">
+            <label class="contact-field__label" for="contact-nombre" data-key="contact-label-nombre">NOMBRE.</label>
+            <input
+              class="contact-field__input"
+              type="text"
+              id="contact-nombre"
+              name="nombre"
+              autocomplete="name"
+              required
+              data-key-placeholder="contact-ph-nombre"
+              placeholder="INGRESA TU NOMBRE"
+            />
+          </div>
+
+          <div class="contact-field contact-field--serif">
+            <label class="contact-field__label" for="contact-correo" data-key="contact-label-correo">CORREO.</label>
+            <input
+              class="contact-field__input"
+              type="email"
+              id="contact-correo"
+              name="correo"
+              autocomplete="email"
+              required
+              data-key-placeholder="contact-ph-correo"
+              placeholder="INGRESA TU CORREO"
+            />
+          </div>
+
+          <div class="contact-field contact-field--sans contact-field--message">
+            <label class="contact-field__label" for="contact-mensaje" data-key="contact-label-mensaje">MENSAJE.</label>
+            <textarea
+              class="contact-field__input contact-field__textarea"
+              id="contact-mensaje"
+              name="mensaje"
+              rows="2"
+              required
+              data-key-placeholder="contact-ph-mensaje"
+              placeholder="ESCRIBE TU MENSAJE"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="contact-field contact-field--serif contact-submit" data-key="contact-submit">
+            ENVIAR.
+          </button>
+        </form>
       </div>
     </section>
 
