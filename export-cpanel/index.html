@@ -1,1 +1,181 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Eduardo Franco — Fotógrafo Comercial. Bogotá, Colombia." />
+  <meta name="author" content="Eduardo Franco" />
+  <meta property="og:title" content="Eduardo Franco — Fotógrafo Profesional" />
+  <meta property="og:description" content="Portafolio oficial de fotografía comercial y publicitaria." />
+  <meta property="og:image" content="https://eduardo-franco-2026.vercel.app/css/firma/firma_eduardo.svg" />
+  <meta property="og:url" content="https://eduardofranco.com.co/" />
+  <meta property="og:type" content="website" />
+  <title>Eduardo Franco — Fotógrafo Profesional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Poppins:wght@100;300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ══ CURSOR MAGNÉTICO SVG ══ -->
+  <svg class="cursor" id="cursor" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+    <circle class="cursor__circle" cx="20" cy="20" r="2.5" fill="#FFFFFF" />
+  </svg>
+
+  <!-- ══ LOADER ══ -->
+  <div class="loader" id="loader">
+    <div class="loader__line" id="loader-line"></div>
+  </div>
+
+  <!-- Botón de Control Superior Derecho (INICIO / MENÚ / CERRAR) -->
+  <button id="menu-toggle-btn" class="top-right-btn" data-key="toggle-home">INICIO</button>
+
+  <!-- Contenedor principal que se desplaza en horizontal -->
+  <div class="horizontal-container" id="horizontalContainer">
+
+    <!-- PANEL 1: HOME -->
+    <section class="panel" id="panel-home">
+      <!-- Slideshow de fondo de alta calidad -->
+      <div class="home-slideshow" id="home-slideshow">
+        <!-- Las imágenes se cargan dinámicamente mediante JS -->
+      </div>
+      
+      <!-- Capa de oscurecimiento de fondo -->
+      <div class="slideshow-overlay" id="slideshow-overlay"></div>
+
+      <!-- Detalle decorativo minimalista -->
+      <div class="decor-dot"></div>
+
+      <!-- Contenedor interactivo del Home -->
+      <div class="hero-wrapper" id="hero-wrapper">
+        <!-- Columna Izquierda: Firma + categoría en loop -->
+        <div class="hero-left">
+          <div class="hero-brand">
+            <img
+              class="hero-firma"
+              src="css/firma/firma_eduardo.svg"
+              alt="Eduardo Franco Photography"
+              width="365"
+              height="82"
+            />
+            <div class="category-loop-viewport">
+              <p class="category-loop is-in" id="category-loop" aria-live="polite">Alimentos</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Menú de Navegación Vertical -->
+        <div class="hero-right">
+          <nav class="main-menu" id="main-menu">
+            <a href="#trabajos" class="nav-link menu-item" data-target="panel-trabajos" data-key="menu-works">TRABAJOS</a>
+            <a href="#manifiesto" class="nav-link menu-item" data-target="panel-manifiesto" data-key="menu-manifesto">MANIFIESTO</a>
+            <a href="#contacto" class="nav-link menu-item" data-target="panel-contacto" data-key="menu-contact">CONTÁCTO</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Barra Inferior del Home -->
+      <div class="hero-bottom" id="hero-bottom">
+        <div class="hero-bottom-line" aria-hidden="true"></div>
+        <div class="social-links">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="bottom-link nav-hover-trigger">INSTAGRAM</a>
+          <span class="social-divider" aria-hidden="true">|</span>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="bottom-link nav-hover-trigger">FACEBOOK</a>
+          <span class="social-divider" aria-hidden="true">|</span>
+          <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="bottom-link nav-hover-trigger">BEHANCE</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 2: TRABAJOS -->
+    <section class="panel" id="panel-trabajos">
+      <div class="section-header">
+        <h2 data-key="title-works">01 — TRABAJOS</h2>
+        <div class="filters-wrap">
+          <div class="filter-buttons" id="filter-buttons">
+            <button class="filter-btn active" data-category="alimentos" data-key="filter-alimentos">Alimentos</button>
+            <button class="filter-btn" data-category="hoteleria" data-key="filter-hoteleria">Hotelería</button>
+            <button class="filter-btn" data-category="lugares" data-key="filter-lugares">Lugares</button>
+            <button class="filter-btn" data-category="producto" data-key="filter-producto">Producto</button>
+          </div>
+          <div class="subfilter-buttons" id="subfilter-buttons" hidden>
+            <button class="filter-btn subfilter-btn" data-category="producto" data-subcategory="cocinas" data-key="subfilter-cocinas">Cocinas</button>
+            <button class="filter-btn subfilter-btn" data-category="producto" data-subcategory="estilo_de_vida" data-key="subfilter-estilo_de_vida">Estilo de vida</button>
+            <button class="filter-btn subfilter-btn" data-category="producto" data-subcategory="otros" data-key="subfilter-otros">Otros</button>
+            <button class="filter-btn subfilter-btn" data-category="producto" data-subcategory="refrigeracion" data-key="subfilter-refrigeracion">Refrigeración</button>
+            <button class="filter-btn subfilter-btn" data-category="producto" data-subcategory="television" data-key="subfilter-television">Televisión</button>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-grid" id="galleryContainer">
+        <!-- Las imágenes se cargan dinámicamente aquí -->
+      </div>
+    </section>
+
+    <!-- PANEL 3: MANIFIESTO -->
+    <section class="panel" id="panel-manifiesto">
+      <div class="manifesto-content">
+        <h2 data-key="title-manifesto">02 — MANIFIESTO</h2>
+        <blockquote class="quote" data-key="quote-manifesto">"La fotografía no captura la realidad. La crea."</blockquote>
+        <p class="body-text" data-key="desc-manifesto">El espacio visual de Eduardo Franco se centra en la estética de alta gama, el diseño editorial y la precisión comercial.</p>
+      </div>
+    </section>
+
+    <!-- PANEL 4: CONTACTO -->
+    <section class="panel" id="panel-contacto">
+      <div class="contact-content">
+        <h2 data-key="title-contact">03 — CONTACTO</h2>
+        <h3 data-key="heading-contact">Empecemos algo.</h3>
+        <p class="contact-info-item"><span data-key="label-email">Email</span>: <a href="mailto:ceo@eduardofranco.com.co" class="contact-link">ceo@eduardofranco.com.co</a></p>
+        <p class="contact-info-item"><span data-key="label-location">Ubicación</span>: <span data-key="val-location">Bogotá, Colombia</span></p>
+        <p class="contact-info-item"><span data-key="label-phone">Cel</span>: <a href="tel:+573104700181" class="contact-link">3104700181</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal de Créditos Minimalista -->
+  <div class="credits-modal" id="credits-modal" aria-hidden="true">
+    <div class="credits-modal__backdrop" id="credits-modal-backdrop"></div>
+    <div class="credits-modal__content">
+      <button class="credits-modal__close" id="credits-close-btn" aria-label="Cerrar modal">&times;</button>
+      <h4 data-key="credits-title">CRÉDITOS</h4>
+      <p data-key="credits-p1">© 2026 Eduardo Franco. Todos los derechos reservados.</p>
+      <p data-key="credits-p2">Concepto y diseño inspirado en el minimalismo editorial.</p>
+      <p data-key="credits-p3">Desarrollado para fotografía comercial de alta gama.</p>
+    </div>
+  </div>
+
+  <!-- Lightbox de galería -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vista ampliada">
+    <div class="lightbox__backdrop" id="lightbox-backdrop"></div>
+    <button type="button" class="lightbox__close" id="lightbox-close" aria-label="Cerrar imagen">&times;</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+    </figure>
+  </div>
+
+  <!-- WhatsApp flotante -->
+  <a
+    class="whatsapp-fab"
+    id="whatsapp-fab"
+    href="https://wa.me/573104700181?text=Hola%2C%20vi%20tu%20portafolio%20y%20quiero%20hablar%20de%20mi%20proyecto"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="WhatsApp — ¿Hablamos de tu proyecto?"
+  >
+    <span class="whatsapp-fab__pill">
+      <span class="whatsapp-fab__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z" />
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+        </svg>
+      </span>
+      <span class="whatsapp-fab__label" data-key="whatsapp-label">¿Hablamos de tu proyecto?</span>
+    </span>
+  </a>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
