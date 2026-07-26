@@ -173,7 +173,7 @@ body {
 .top-right-btn {
   position: fixed;
   top: 3.5rem;
-  right: 3.5rem;
+  right: 6rem;
   background: transparent;
   color: var(--color-text);
   border: none;
@@ -185,6 +185,7 @@ body {
   font-size: 0.75rem;
   letter-spacing: 3px;
   text-transform: uppercase;
+  text-align: right;
   transition: var(--transition-fast);
   opacity: 1;
   visibility: visible;
@@ -923,7 +924,7 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
   .top-right-btn {
     top: 2rem;
-    right: 2rem;
+    right: 4rem;
     z-index: 1200;
     opacity: 1 !important;
     visibility: visible !important;
@@ -1038,12 +1039,12 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
   .top-right-btn {
     top: 1.35rem;
-    right: 1.35rem;
+    right: 1.5rem;
     font-size: 0.7rem;
     letter-spacing: 2.5px;
     z-index: 1200;
     background: rgba(0, 0, 0, 0.35);
-    padding: 0.45rem 0.15rem;
+    padding: 0.45rem 0;
   }
 
   .section-header {
