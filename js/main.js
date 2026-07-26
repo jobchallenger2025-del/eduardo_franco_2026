@@ -41,7 +41,8 @@ const TRANSLATIONS = {
     'credits-title': 'CRÉDITOS',
     'credits-p1': '© 2026 Eduardo Franco. Todos los derechos reservados.',
     'credits-p2': 'Concepto y diseño inspirado en el minimalismo editorial.',
-    'credits-p3': 'Desarrollado para fotografía comercial de alta gama.'
+    'credits-p3': 'Desarrollado para fotografía comercial de alta gama.',
+    'whatsapp-label': '¿Hablamos de tu proyecto?'
   },
   en: {
     'menu-works': 'WORKS',
@@ -72,7 +73,8 @@ const TRANSLATIONS = {
     'credits-title': 'CREDITS',
     'credits-p1': '© 2026 Eduardo Franco. All rights reserved.',
     'credits-p2': 'Concept and design inspired by editorial minimalism.',
-    'credits-p3': 'Developed for high-end commercial photography.'
+    'credits-p3': 'Developed for high-end commercial photography.',
+    'whatsapp-label': 'Shall we talk about your project?'
   }
 };
 
@@ -139,13 +141,13 @@ class MagneticCursor {
 
     // Delegación de eventos para aplicar el cursor grande en hovers
     document.body.addEventListener('mouseenter', (e) => {
-      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close')) {
+      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab')) {
         this.el.classList.add('hover-large');
       }
     }, true);
 
     document.body.addEventListener('mouseleave', (e) => {
-      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close')) {
+      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab')) {
         this.el.classList.remove('hover-large');
       }
     }, true);
