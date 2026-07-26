@@ -375,7 +375,7 @@ body {
   right: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   z-index: 4;
   padding: 0 6rem 2.75rem;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -411,6 +411,7 @@ body {
 .social-links {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.85rem;
 }
 .social-divider {
@@ -930,7 +931,7 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
   .hero-bottom {
     padding: 0 4rem 2.5rem;
-    align-items: flex-end;
+    align-items: flex-start;
   }
   .panel {
     padding: 6rem 4rem;
@@ -1028,7 +1029,7 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   .social-links {
     gap: 0.55rem;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
     max-width: 100%;
   }
   .bottom-link {
