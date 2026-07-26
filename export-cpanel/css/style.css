@@ -986,7 +986,7 @@ body.home-menu-visible .whatsapp-fab {
 
 .whatsapp-fab__pill {
   display: inline-flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
   gap: 0;
@@ -1030,12 +1030,11 @@ body.home-menu-visible .whatsapp-fab {
   text-transform: none;
   color: rgba(255, 255, 255, 0.88);
   opacity: 0;
-  transform: translateX(-6px);
+  transform: none;
   transition:
     opacity 0.35s ease,
     width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    max-width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .whatsapp-fab__icon {
@@ -1049,6 +1048,7 @@ body.home-menu-visible .whatsapp-fab {
   line-height: 0;
   overflow: hidden;
   border-radius: 50%;
+  transition: margin 0.35s ease, transform 0.35s ease;
 }
 
 .whatsapp-fab__icon img {
@@ -1064,8 +1064,8 @@ body.home-menu-visible .whatsapp-fab {
 .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   width: auto;
   max-width: 22rem;
-  padding: 0 1.3rem 0 0.35rem;
-  gap: 0.8rem;
+  padding: 0 0.35rem 0 1.3rem;
+  gap: 0;
   overflow: hidden;
   border-color: rgba(255, 255, 255, 0.42);
   background: rgba(8, 8, 8, 0.92);
@@ -1073,9 +1073,11 @@ body.home-menu-visible .whatsapp-fab {
   animation-play-state: paused;
 }
 
+/* Solo el icono: separación ligera a la derecha del texto */
 .whatsapp-fab:hover .whatsapp-fab__icon,
 .whatsapp-fab:focus-visible .whatsapp-fab__icon {
-  margin-left: 0.55rem;
+  margin-left: 8px;
+  margin-right: 0.55rem;
 }
 
 .whatsapp-fab:hover .whatsapp-fab__label,
@@ -1083,7 +1085,7 @@ body.home-menu-visible .whatsapp-fab {
   width: auto;
   max-width: 18rem;
   opacity: 1;
-  transform: translateX(0);
+  transform: none;
 }
 
 .whatsapp-fab:focus {
@@ -1425,13 +1427,13 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   .whatsapp-fab:focus-visible .whatsapp-fab__pill {
     width: auto;
     max-width: 18rem;
-    padding: 0 1.1rem 0 0.3rem;
+    padding: 0 0.3rem 0 1.1rem;
   }
 
   .whatsapp-fab:hover .whatsapp-fab__icon,
   .whatsapp-fab:focus-visible .whatsapp-fab__icon {
-    margin-left: 0.45rem;
-    margin-right: 0;
+    margin-left: 8px;
+    margin-right: 0.45rem;
   }
 
   .whatsapp-fab__label {
@@ -1458,14 +1460,14 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
     width: auto;
     max-width: 18rem;
     height: 3rem;
-    padding: 0 1.1rem 0 0.3rem;
-    gap: 0.7rem;
+    padding: 0 0.3rem 0 1.1rem;
+    gap: 0;
     animation: none;
   }
 
   .whatsapp-fab__icon {
-    margin-left: 0.45rem;
-    margin-right: 0;
+    margin-left: 8px;
+    margin-right: 0.45rem;
   }
 
   .whatsapp-fab__label {
