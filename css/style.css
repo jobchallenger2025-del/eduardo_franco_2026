@@ -965,7 +965,8 @@ body.on-contact .top-right-btn:hover {
 /* ══ WHATSAPP FLOTANTE ══ */
 .whatsapp-fab {
   position: fixed;
-  right: 2rem;
+  /* Alineado bajo CONTÁCTO: padding del hero (6rem) + hero-right (1rem) */
+  right: 7rem;
   left: auto;
   bottom: 5.75rem;
   z-index: 1500;
@@ -1201,6 +1202,9 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
     padding: 0 4rem 2.5rem;
     align-items: flex-start;
   }
+  .whatsapp-fab {
+    right: 4rem;
+  }
   .panel {
     padding: 6rem 4rem;
   }
@@ -1400,7 +1404,7 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
 
   .whatsapp-fab {
-    right: 1.15rem;
+    right: 1.75rem;
     left: auto;
     bottom: 4.85rem;
   }
