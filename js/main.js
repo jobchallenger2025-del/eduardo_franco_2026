@@ -672,7 +672,7 @@ class AppNavigation {
         show = item.dataset.category === category;
       }
 
-      item.style.display = show ? 'block' : 'none';
+      item.style.display = show ? 'inline-block' : 'none';
     });
 
     const subfilters = $('#subfilter-buttons');
