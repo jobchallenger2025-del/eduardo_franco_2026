@@ -1420,6 +1420,18 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
 }
 
+/*
+  Firma (.hero-firma) en móvil: +5% adicional.
+  Escritorio/portátil sin cambios: min(27.5vw, 500px).
+  Base móvil previa min(41vw, 340px) × 1.05 = min(43.05vw, 357px).
+*/
+@media (max-width: 767px) {
+  .hero-firma {
+    width: min(43.05vw, 357px);
+    max-width: 100%;
+  }
+}
+
 /* En táctil: pastilla abierta (sin hover) */
 @media (hover: none), (pointer: coarse) {
   .whatsapp-fab__pill {
