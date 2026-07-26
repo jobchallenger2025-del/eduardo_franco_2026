@@ -166,6 +166,7 @@ body {
   flex: 1;
   min-height: 0;
   max-height: none;
+  align-content: start;
 }
 
 /* ══ BOTÓN SUPERIOR DERECHO (INICIO / MENÚ) — siempre visible ══ */
@@ -497,30 +498,30 @@ body {
   color: var(--color-text);
 }
 
-/* Cuadrícula de Galería — masonry fluido (horizontal + vertical) */
+/* Galería: grid fluido (todas las fotos visibles, scroll vertical) */
 .gallery-grid {
-  column-count: 3;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+  align-content: start;
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 65vh;
   padding-right: 1rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .gallery-item {
-  display: inline-block;
+  display: block;
   width: 100%;
-  margin: 0 0 1.5rem;
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
+  margin: 0;
   position: relative;
   overflow: hidden;
   background-color: #0d0d0d;
   border-radius: 2px;
   cursor: pointer;
-  vertical-align: top;
   isolation: isolate;
 }
 
@@ -529,12 +530,12 @@ body {
   width: 100%;
   height: auto;
   max-width: 100%;
+  aspect-ratio: auto;
   object-fit: cover;
   object-position: center;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
   pointer-events: none;
-  vertical-align: top;
 }
 
 .gallery-item:hover img {
@@ -543,7 +544,8 @@ body {
 
 @media (max-width: 1100px) {
   .gallery-grid {
-    column-count: 2;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 }
 
@@ -1167,8 +1169,9 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
 
   /* Galería móvil: una columna, proporciones naturales */
   .gallery-grid {
-    column-count: 1;
-    column-gap: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
     width: 100%;
     max-width: 100%;
     max-height: none;
@@ -1179,11 +1182,10 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
 
   .gallery-item {
-    display: inline-block;
+    display: block;
     width: 100%;
     max-width: 100%;
-    margin: 0 0 1.25rem;
-    aspect-ratio: auto;
+    margin: 0;
   }
 
   .gallery-item img {
