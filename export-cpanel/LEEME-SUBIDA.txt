@@ -1,5 +1,1 @@
-﻿EXPORTACION ESTATICA PARA cPanel — Eduardo Franco
-================================================
-
-Subir a public_html: index.html, css/, js/
-NO subir fotografia/ (ya esta en el servidor).
+﻿Subir a public_html: index.html, css/, js/. No subir fotografia/.

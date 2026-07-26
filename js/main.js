@@ -27,6 +27,7 @@ const TRANSLATIONS = {
     'filter-producto': 'Producto',
     'subfilter-cocinas': 'Cocinas',
     'subfilter-estilo_de_vida': 'Estilo de vida',
+    'subfilter-otros': 'Otros',
     'subfilter-refrigeracion': 'Refrigeración',
     'subfilter-television': 'Televisión',
     'title-manifesto': '02 — MANIFIESTO',
@@ -59,6 +60,7 @@ const TRANSLATIONS = {
     'filter-producto': 'Product',
     'subfilter-cocinas': 'Kitchens',
     'subfilter-estilo_de_vida': 'Lifestyle',
+    'subfilter-otros': 'Others',
     'subfilter-refrigeracion': 'Refrigeration',
     'subfilter-television': 'Television',
     'title-manifesto': '02 — MANIFESTO',
@@ -662,12 +664,68 @@ class AppNavigation {
         `${BASE}/lugares/visual8.webp`
       ],
       producto: {
-        cocinas: [],
-        estilo_de_vida: [],
-        refrigeracion: [
-          `${BASE}/producto/refrigeracion/nevera_001.webp`
+        cocinas: [
+          `${BASE}/producto/cocinas/Campana_001.webp`,
+          `${BASE}/producto/cocinas/Campana_002.webp`,
+          `${BASE}/producto/cocinas/Campana_003.webp`,
+          `${BASE}/producto/cocinas/cocinas_001.webp`,
+          `${BASE}/producto/cocinas/cocinas_002.webp`,
+          `${BASE}/producto/cocinas/cocinas_003.webp`,
+          `${BASE}/producto/cocinas/cocinas_004.webp`,
+          `${BASE}/producto/cocinas/cocinas_005.webp`,
+          `${BASE}/producto/cocinas/cocinas_006.webp`,
+          `${BASE}/producto/cocinas/cocinas_007%20(1).webp`,
+          `${BASE}/producto/cocinas/cocinas_007.webp`,
+          `${BASE}/producto/cocinas/cocinas_008.webp`,
+          `${BASE}/producto/cocinas/cocinas_009.webp`,
+          `${BASE}/producto/cocinas/cocinas_010.webp`,
+          `${BASE}/producto/cocinas/cocinas_011%20(1).webp`,
+          `${BASE}/producto/cocinas/cocinas_011.webp`,
+          `${BASE}/producto/cocinas/cocinas_012.webp`,
+          `${BASE}/producto/cocinas/cocinas_013.webp`,
+          `${BASE}/producto/cocinas/cocinas_014.webp`,
+          `${BASE}/producto/cocinas/cocinas_015.webp`,
+          `${BASE}/producto/cocinas/cocinas_016.webp`,
+          `${BASE}/producto/cocinas/cocinas_017.webp`,
+          `${BASE}/producto/cocinas/cocinas_018.webp`,
+          `${BASE}/producto/cocinas/cocinas_019.webp`,
+          `${BASE}/producto/cocinas/cocinas_021.webp`
         ],
-        television: []
+        estilo_de_vida: [
+          `${BASE}/producto/estilo_de_vida/001.webp`,
+          `${BASE}/producto/estilo_de_vida/002.webp`,
+          `${BASE}/producto/estilo_de_vida/003.webp`,
+          `${BASE}/producto/estilo_de_vida/004.webp`,
+          `${BASE}/producto/estilo_de_vida/005.webp`
+        ],
+        otros: [
+          `${BASE}/producto/otros/otros_001.webp`,
+          `${BASE}/producto/otros/otros_002.webp`,
+          `${BASE}/producto/otros/otros_003.webp`,
+          `${BASE}/producto/otros/otros_004.webp`,
+          `${BASE}/producto/otros/otros_005.webp`,
+          `${BASE}/producto/otros/otros_006.webp`,
+          `${BASE}/producto/otros/otros_007.webp`
+        ],
+        refrigeracion: [
+          `${BASE}/producto/refrigeracion/nevera_001.webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_001.webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_002%20(1).webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_002.webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_003.webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_004.webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_005.webp`,
+          `${BASE}/producto/refrigeracion/refrigeracion_006.webp`
+        ],
+        television: [
+          `${BASE}/producto/television/television_001.webp`,
+          `${BASE}/producto/television/television_002.webp`,
+          `${BASE}/producto/television/television_003.webp`,
+          `${BASE}/producto/television/television_004.webp`,
+          `${BASE}/producto/television/television_005.webp`,
+          `${BASE}/producto/television/television_006.webp`,
+          `${BASE}/producto/television/television_007.webp`
+        ]
       }
     };
 
