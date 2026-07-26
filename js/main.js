@@ -27,7 +27,7 @@ const TRANSLATIONS = {
     'filter-lugares': 'Lugares',
     'filter-producto': 'Producto',
     'subfilter-cocinas': 'Cocinas',
-    'subfilter-lifestyle': 'LifeStyle',
+    'subfilter-estilo_de_vida': 'Estilo de vida',
     'subfilter-refrigeracion': 'Refrigeración',
     'subfilter-television': 'Televisión',
     'title-manifesto': '02 — MANIFIESTO',
@@ -59,7 +59,7 @@ const TRANSLATIONS = {
     'filter-lugares': 'Places',
     'filter-producto': 'Product',
     'subfilter-cocinas': 'Kitchens',
-    'subfilter-lifestyle': 'LifeStyle',
+    'subfilter-estilo_de_vida': 'Lifestyle',
     'subfilter-refrigeracion': 'Refrigeration',
     'subfilter-television': 'Television',
     'title-manifesto': '02 — MANIFESTO',
@@ -207,10 +207,10 @@ class BackgroundSlideshow {
     if (!this.container) return;
 
     this.images = [
-      'fotografia/Producto/LifeStyle/closeup-shot-retro-car-with-only-back-wheels-ground-street-night.jpg',
-      'fotografia/Lugares/stock-photo-bogota-skyline-during-sunset-colombia-2560484741.jpg',
-      'fotografia/Hoteleri\u0301a/airplane-sunset.jpg',
-      'fotografia/Alimentos/top-view-spring-rolls-ingredients-concept.jpg'
+      'https://eduardofranco.com.co/fotografia/alimentos/albondigas.jpg',
+      'https://eduardofranco.com.co/fotografia/hoteleria/frontal_hotel.jpg',
+      'https://eduardofranco.com.co/fotografia/lugares/cava_visual2.jpg',
+      'https://eduardofranco.com.co/fotografia/alimentos/tomahawk.jpg'
     ];
 
     this.currentIndex = 0;
@@ -543,42 +543,33 @@ class AppNavigation {
   _loadGalleryImages() {
     if (!this.galleryContainer) return;
 
-    // Hotelería usa tilde NFD del sistema de archivos (e + combining acute)
-    const hoteleriaDir = 'fotografia/Hoteleri\u0301a';
+    const BASE = 'https://eduardofranco.com.co/fotografia';
 
     const imagePaths = {
       alimentos: [
-        'fotografia/Alimentos/delicious-meal-vegetables-salad-table.jpg',
-        'fotografia/Alimentos/flat-lay-tomatoes-with-garlic-pasta.jpg',
-        'fotografia/Alimentos/pilaf-with-meet-dried-fruits-chestnut-rice-rosemary-leaves-wooden-plate.jpg',
-        'fotografia/Alimentos/slices-tomatoes-with-veggies-salt.jpg',
-        'fotografia/Alimentos/top-view-spring-rolls-ingredients-concept.jpg'
+        `${BASE}/alimentos/albondigas.jpg`,
+        `${BASE}/alimentos/hamburguesa_tres.jpg`,
+        `${BASE}/alimentos/toma_fachada.jpg`,
+        `${BASE}/alimentos/tomahawk.jpg`,
+        `${BASE}/alimentos/tortilla.jpg`
       ],
       hoteleria: [
-        `${hoteleriaDir}/800px-Ray_Flying_Legends_2005-1.jpg`,
-        `${hoteleriaDir}/airplane-sunset.jpg`,
-        `${hoteleriaDir}/images%20(1).jpg`,
-        `${hoteleriaDir}/images%20(2).jpg`,
-        `${hoteleriaDir}/images.jpg`
+        `${BASE}/hoteleria/foto7.jpg`,
+        `${BASE}/hoteleria/frontal_hotel.jpg`,
+        `${BASE}/hoteleria/visual1.jpg`,
+        `${BASE}/hoteleria/visual13.jpg`,
+        `${BASE}/hoteleria/visual6.jpg`
       ],
       lugares: [
-        'fotografia/Lugares/istockphoto-1453256961-1024x1024.jpg',
-        'fotografia/Lugares/istockphoto-1499166326-1024x1024.jpg',
-        'fotografia/Lugares/stock-photo-bogota-skyline-during-sunset-colombia-2560484741.jpg'
+        `${BASE}/lugares/cava_visual2.jpg`,
+        `${BASE}/lugares/cava_visual4.jpg`,
+        `${BASE}/lugares/foto1.jpg`,
+        `${BASE}/lugares/foto10.jpg`,
+        `${BASE}/lugares/visual_2do_piso.jpg`
       ],
       producto: {
         cocinas: [],
-        lifestyle: [
-          'fotografia/Producto/LifeStyle/closeup-shot-retro-car-with-only-back-wheels-ground-street-night.jpg',
-          'fotografia/Producto/LifeStyle/futuristic-sports-car.jpg',
-          'fotografia/Producto/LifeStyle/sunset-coastal-drive.jpg',
-          'fotografia/Producto/LifeStyle/superhero-car-vintage-style%20(1).jpg',
-          'fotografia/Producto/LifeStyle/superhero-car-vintage-style.jpg',
-          'fotografia/Producto/LifeStyle/view-car-running-high-speed%20(1).jpg',
-          'fotografia/Producto/LifeStyle/view-car-running-high-speed-city.jpg',
-          'fotografia/Producto/LifeStyle/view-car-running-high-speed.jpg',
-          'fotografia/Producto/LifeStyle/view-three-dimensional-car-with-nature-landscape.jpg'
-        ],
+        estilo_de_vida: [],
         refrigeracion: [],
         television: []
       }

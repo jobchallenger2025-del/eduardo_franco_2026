@@ -1,0 +1,14 @@
+# Assets locales (las fotos se sirven desde el servidor)
+fotografia/
+fotografia.zip
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Entorno / deploy local
+.env
+.env.*
+.vercel
+node_modules/
