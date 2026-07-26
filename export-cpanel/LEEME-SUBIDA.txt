@@ -1,0 +1,22 @@
+﻿EXPORTACION ESTATICA PARA cPanel — Eduardo Franco
+================================================
+
+Contenido a subir al document root (public_html):
+  - index.html
+  - carpeta css/
+  - carpeta js/
+
+NO subir la carpeta fotografia/ (ya esta en el servidor).
+
+Rutas de imagenes en el codigo:
+  /fotografia/alimentos/...
+  /fotografia/hoteleria/...
+  /fotografia/lugares/...
+  /fotografia/producto/...
+
+Pasos en cPanel:
+  1. File Manager → public_html (o el dominio correspondiente)
+  2. Subir index.html, css/ y js/ (reemplazar si existen)
+  3. Verificar que exista /fotografia/ con las WebP
+  4. Abrir https://eduardofranco.com.co/
+
