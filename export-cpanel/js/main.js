@@ -474,6 +474,13 @@ class AppNavigation {
     this._loadGalleryImages();
     this._activateCategoryFilter('alimentos');
     this._syncLayoutMode();
+    this._syncHomeMenuVisibility();
+  }
+
+  _syncHomeMenuVisibility() {
+    // WhatsApp se oculta solo cuando el menú del Home está a la vista
+    const menuVisible = this.isMenuOpen && this.currentIndex === 0;
+    document.body.classList.toggle('home-menu-visible', menuVisible);
   }
 
   _isMobileLayout() {
@@ -611,6 +618,7 @@ class AppNavigation {
       this.menuToggleBtn.dataset.viewState = 'inner';
       this.slideshowOverlay.style.opacity = '0.98';
     }
+    this._syncHomeMenuVisibility();
     syncToggleLabel();
   }
 
@@ -645,6 +653,7 @@ class AppNavigation {
         syncToggleLabel();
         this.slideshowOverlay.style.opacity = '0.98';
       }
+      this._syncHomeMenuVisibility();
       return;
     }
 
@@ -671,6 +680,8 @@ class AppNavigation {
       // En paneles interiores oscurecemos más el fondo del Home para máxima legibilidad
       this.slideshowOverlay.style.opacity = '0.98';
     }
+
+    this._syncHomeMenuVisibility();
   }
 
   toggleMenu() {
@@ -686,6 +697,7 @@ class AppNavigation {
     this.heroWrapper.classList.remove('menu-hidden');
     if (this.decorDot) this.decorDot.classList.remove('menu-hidden');
     this.slideshowOverlay.style.opacity = '0.96';
+    this._syncHomeMenuVisibility();
     if (this.currentIndex === 0) syncToggleLabel();
   }
 
@@ -694,6 +706,7 @@ class AppNavigation {
     this.heroWrapper.classList.add('menu-hidden');
     if (this.decorDot) this.decorDot.classList.add('menu-hidden');
     this.slideshowOverlay.style.opacity = '0.25';
+    this._syncHomeMenuVisibility();
     if (this.currentIndex === 0) syncToggleLabel();
   }
 
