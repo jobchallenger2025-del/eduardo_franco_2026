@@ -498,10 +498,10 @@ body {
   color: var(--color-text);
 }
 
-/* Galería: grid fluido (todas las fotos visibles, scroll vertical) */
+/* Galería: CSS Grid limpio (auto-fill) */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   align-items: start;
   align-content: start;
@@ -514,39 +514,33 @@ body {
 }
 
 .gallery-item {
-  display: block;
+  position: relative;
   width: 100%;
   margin: 0;
-  position: relative;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   background-color: #0d0d0d;
   border-radius: 2px;
   cursor: pointer;
-  isolation: isolate;
 }
 
 .gallery-item img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
-  aspect-ratio: auto;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
   pointer-events: none;
 }
 
 .gallery-item:hover img {
-  transform: scale(1.03);
-}
-
-@media (max-width: 1100px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
+  transform: scale(1.02);
+  opacity: 0.92;
 }
 
 /* ══ LIGHTBOX GALERÍA ══ */
@@ -1167,10 +1161,9 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
     max-width: 100%;
   }
 
-  /* Galería móvil: una columna, proporciones naturales */
+  /* Galería móvil: mismo grid auto-fill */
   .gallery-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
     gap: 1.25rem;
     width: 100%;
     max-width: 100%;
@@ -1182,17 +1175,16 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
 
   .gallery-item {
-    display: block;
     width: 100%;
     max-width: 100%;
-    margin: 0;
+    aspect-ratio: 4 / 3;
   }
 
   .gallery-item img {
     width: 100%;
+    height: 100%;
     max-width: 100%;
-    height: auto;
-    display: block;
+    object-fit: contain;
   }
 
   .manifesto-content,
