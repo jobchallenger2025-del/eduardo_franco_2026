@@ -321,6 +321,7 @@ class AppNavigation {
 
     this._bind();
     this._loadGalleryImages();
+    this._activateCategoryFilter('alimentos');
     this._syncLayoutMode();
   }
 
@@ -467,6 +468,11 @@ class AppNavigation {
 
     this.currentIndex = index;
 
+    // Al entrar a Trabajos: abrir siempre en Alimentos (layout limpio)
+    if (this.panels[index]?.id === 'panel-trabajos') {
+      this._activateCategoryFilter('alimentos');
+    }
+
     // Móvil: scroll vertical nativo (sin deslizamiento lateral)
     if (this._isMobileLayout()) {
       this.container.style.transform = 'none';
@@ -608,6 +614,19 @@ class AppNavigation {
     });
 
     this.galleryContainer.innerHTML = html;
+  }
+
+  _activateCategoryFilter(category, subcategory = null) {
+    this._filterGallery(category, subcategory);
+
+    this.filterBtns.forEach(b => b.classList.remove('active'));
+    const target = this.filterBtns.find(b => {
+      if (subcategory) {
+        return b.dataset.category === category && b.dataset.subcategory === subcategory;
+      }
+      return b.dataset.category === category && !b.dataset.subcategory;
+    });
+    target?.classList.add('active');
   }
 
   _filterGallery(category, subcategory = null) {
