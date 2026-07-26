@@ -105,20 +105,12 @@ body.has-custom-cursor * {
   height: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.cursor.is-active {
-  opacity: 1;
-}
-
-.cursor.is-hidden {
-  opacity: 0;
+  /* Sin opacity aquí: rompería mix-blend-mode con el menú */
 }
 
 .cursor__dot,
-.cursor__ring {
+.cursor__ring,
+.circulo-cursor {
   position: fixed;
   top: 0;
   left: 0;
@@ -126,6 +118,19 @@ body.has-custom-cursor * {
   pointer-events: none;
   will-change: transform;
   transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  visibility: hidden;
+}
+
+.cursor.is-active .cursor__dot,
+.cursor.is-active .cursor__ring,
+.cursor.is-active .circulo-cursor {
+  visibility: visible;
+}
+
+.cursor.is-hidden .cursor__dot,
+.cursor.is-hidden .cursor__ring,
+.cursor.is-hidden .circulo-cursor {
+  visibility: hidden;
 }
 
 .cursor__dot {
@@ -135,11 +140,11 @@ body.has-custom-cursor * {
   z-index: 2;
   transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.35s ease,
               background 0.35s ease;
 }
 
-.cursor__ring {
+.cursor__ring,
+.circulo-cursor {
   width: 42px;
   height: 42px;
   border: 1px solid rgba(255, 255, 255, 0.45);
@@ -148,55 +153,52 @@ body.has-custom-cursor * {
   transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
               height 0.55s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.4s ease,
-              background 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.35s ease;
+              background 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Hover interactivo: anillo medio */
 .cursor.is-hover .cursor__dot {
   width: 5px;
   height: 5px;
-  opacity: 0.85;
 }
 
-.cursor.is-hover .cursor__ring {
+.cursor.is-hover .cursor__ring,
+.cursor.is-hover .circulo-cursor {
   width: 72px;
   height: 72px;
   border-color: rgba(255, 255, 255, 0.7);
   background: rgba(255, 255, 255, 0.04);
 }
 
-/* Revelación editorial: círculo sólido con blend */
+/*
+  Revelación editorial sobre el menú:
+  círculo blanco + mix-blend-mode: difference
+  → blanco sobre negro; letras invertidas en la intersección
+*/
 .cursor.is-reveal .cursor__dot {
   width: 0;
   height: 0;
-  opacity: 0;
+  visibility: hidden;
 }
 
-.cursor.is-reveal .cursor__ring {
-  width: 150px;
-  height: 150px;
+.cursor.is-reveal .cursor__ring,
+.cursor.is-reveal .circulo-cursor,
+.circulo-cursor.is-blend {
+  width: clamp(120px, 14vw, 168px);
+  height: clamp(120px, 14vw, 168px);
   border-color: transparent;
   background: #ffffff;
   mix-blend-mode: difference;
 }
 
-body.on-contact .cursor__dot {
-  background: #000000;
-}
-
-body.on-contact .cursor__ring {
-  border-color: rgba(0, 0, 0, 0.4);
-}
-
-body.on-contact .cursor.is-hover .cursor__ring {
-  border-color: rgba(0, 0, 0, 0.65);
-  background: rgba(0, 0, 0, 0.04);
-}
-
-body.on-contact .cursor.is-reveal .cursor__ring {
-  background: #000000;
-  border-color: transparent;
+/* Aislar fondos/fotos para que el blend impacte sobre todo tipografía */
+.home-slideshow,
+.slideshow-overlay,
+.hero-firma,
+.category-loop-viewport,
+.gallery-grid,
+.whatsapp-fab {
+  isolation: isolate;
 }
 
 /* ══ LOADER (LÍNEA SUPERIOR) ══ */

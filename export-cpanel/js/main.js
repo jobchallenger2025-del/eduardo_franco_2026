@@ -159,7 +159,7 @@ class MagneticCursor {
   constructor() {
     this.el = $('#cursor');
     this.dot = this.el?.querySelector('.cursor__dot');
-    this.ring = this.el?.querySelector('.cursor__ring');
+    this.ring = this.el?.querySelector('.cursor__ring, .circulo-cursor');
     if (!this.el || !this.dot || !this.ring) return;
 
     this.mouse = { x: -100, y: -100 };
@@ -236,6 +236,7 @@ class MagneticCursor {
       if (reveal) {
         this.el.classList.add('is-reveal');
         this.el.classList.remove('is-hover');
+        this.ring.classList.add('is-blend');
         this._setTarget(reveal);
         return;
       }
@@ -243,11 +244,13 @@ class MagneticCursor {
       if (hover) {
         this.el.classList.add('is-hover');
         this.el.classList.remove('is-reveal');
+        this.ring.classList.remove('is-blend');
         this._setTarget(hover);
         return;
       }
 
       this.el.classList.remove('is-hover', 'is-reveal');
+      this.ring.classList.remove('is-blend');
       this._setTarget(null);
     }, true);
   }
