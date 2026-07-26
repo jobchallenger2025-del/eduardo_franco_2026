@@ -207,10 +207,10 @@ class BackgroundSlideshow {
     if (!this.container) return;
 
     this.images = [
-      'https://eduardofranco.com.co/fotografia/alimentos/albondigas.jpg',
-      'https://eduardofranco.com.co/fotografia/hoteleria/frontal_hotel.jpg',
-      'https://eduardofranco.com.co/fotografia/lugares/cava_visual2.jpg',
-      'https://eduardofranco.com.co/fotografia/alimentos/tomahawk.jpg'
+      'https://eduardofranco.com.co/fotografia/alimentos/albondigas.webp',
+      'https://eduardofranco.com.co/fotografia/hoteleria/frontal_hotel.webp',
+      'https://eduardofranco.com.co/fotografia/lugares/cava_visual2.webp',
+      'https://eduardofranco.com.co/fotografia/alimentos/tomahawk.webp'
     ];
 
     this.currentIndex = 0;
@@ -547,25 +547,25 @@ class AppNavigation {
 
     const imagePaths = {
       alimentos: [
-        `${BASE}/alimentos/albondigas.jpg`,
-        `${BASE}/alimentos/hamburguesa_tres.jpg`,
-        `${BASE}/alimentos/toma_fachada.jpg`,
-        `${BASE}/alimentos/tomahawk.jpg`,
-        `${BASE}/alimentos/tortilla.jpg`
+        `${BASE}/alimentos/albondigas.webp`,
+        `${BASE}/alimentos/hamburguesa_tres.webp`,
+        `${BASE}/alimentos/toma_fachada.webp`,
+        `${BASE}/alimentos/tomahawk.webp`,
+        `${BASE}/alimentos/tortilla.webp`
       ],
       hoteleria: [
-        `${BASE}/hoteleria/foto7.jpg`,
-        `${BASE}/hoteleria/frontal_hotel.jpg`,
-        `${BASE}/hoteleria/visual1.jpg`,
-        `${BASE}/hoteleria/visual13.jpg`,
-        `${BASE}/hoteleria/visual6.jpg`
+        `${BASE}/hoteleria/foto7.webp`,
+        `${BASE}/hoteleria/frontal_hotel.webp`,
+        `${BASE}/hoteleria/visual1.webp`,
+        `${BASE}/hoteleria/visual13.webp`,
+        `${BASE}/hoteleria/visual6.webp`
       ],
       lugares: [
-        `${BASE}/lugares/cava_visual2.jpg`,
-        `${BASE}/lugares/cava_visual4.jpg`,
-        `${BASE}/lugares/foto1.jpg`,
-        `${BASE}/lugares/foto10.jpg`,
-        `${BASE}/lugares/visual_2do_piso.jpg`
+        `${BASE}/lugares/cava_visual2.webp`,
+        `${BASE}/lugares/cava_visual4.webp`,
+        `${BASE}/lugares/foto1.webp`,
+        `${BASE}/lugares/foto10.webp`,
+        `${BASE}/lugares/visual_2do_piso.webp`
       ],
       producto: {
         cocinas: [],
