@@ -208,7 +208,7 @@ class BackgroundSlideshow {
 
     this.images = [
       'https://eduardofranco.com.co/fotografia/alimentos/albondigas.webp',
-      'https://eduardofranco.com.co/fotografia/hoteleria/frontal_hotel.webp',
+      'https://eduardofranco.com.co/fotografia/hoteleria/fachada2.webp',
       'https://eduardofranco.com.co/fotografia/lugares/cava_visual2.webp',
       'https://eduardofranco.com.co/fotografia/alimentos/tomahawk.webp'
     ];
@@ -584,27 +584,45 @@ class AppNavigation {
         `${BASE}/alimentos/tabla002.webp`,
         `${BASE}/alimentos/tequila.webp`,
         `${BASE}/alimentos/tomahawk.webp`,
-        `${BASE}/alimentos/tortilla.webp`,
-        `${BASE}/alimentos/tortilla3.webp`
+        `${BASE}/alimentos/tortilla.webp`
       ],
       hoteleria: [
+        `${BASE}/hoteleria/detalle_cama.webp`,
+        `${BASE}/hoteleria/fachada2.webp`,
+        `${BASE}/hoteleria/foto02_hab1.webp`,
+        `${BASE}/hoteleria/foto04.webp`,
+        `${BASE}/hoteleria/foto06.webp`,
+        `${BASE}/hoteleria/foto1.webp`,
+        `${BASE}/hoteleria/foto2.webp`,
+        `${BASE}/hoteleria/foto3.webp`,
         `${BASE}/hoteleria/foto7.webp`,
-        `${BASE}/hoteleria/frontal_hotel.webp`,
+        `${BASE}/hoteleria/foto_terraza.webp`,
+        `${BASE}/hoteleria/habitacion.webp`,
+        `${BASE}/hoteleria/terraza.webp`,
         `${BASE}/hoteleria/visual1.webp`,
+        `${BASE}/hoteleria/visual11.webp`,
         `${BASE}/hoteleria/visual13.webp`,
-        `${BASE}/hoteleria/visual6.webp`
+        `${BASE}/hoteleria/visual15.webp`,
+        `${BASE}/hoteleria/visual18.webp`,
+        `${BASE}/hoteleria/visual19.webp`,
+        `${BASE}/hoteleria/visual3.webp`,
+        `${BASE}/hoteleria/visual6.webp`,
+        `${BASE}/hoteleria/visual8.webp`
       ],
       lugares: [
         `${BASE}/lugares/cava_visual2.webp`,
         `${BASE}/lugares/cava_visual4.webp`,
         `${BASE}/lugares/foto1.webp`,
         `${BASE}/lugares/foto10.webp`,
+        `${BASE}/lugares/toma_fachada.webp`,
         `${BASE}/lugares/visual_2do_piso.webp`
       ],
       producto: {
         cocinas: [],
         estilo_de_vida: [],
-        refrigeracion: [],
+        refrigeracion: [
+          `${BASE}/producto/refrigeracion/nevera_001.webp`
+        ],
         television: []
       }
     };
