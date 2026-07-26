@@ -514,6 +514,7 @@ body {
   overflow: hidden;
   background-color: #0d0d0d;
   border-radius: 2px;
+  cursor: pointer;
 }
 .gallery-item img {
   width: 100%;
@@ -521,9 +522,86 @@ body {
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
+  pointer-events: none;
 }
 .gallery-item:hover img {
   transform: scale(1.05);
+}
+
+/* ══ LIGHTBOX GALERÍA ══ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.lightbox__close {
+  position: absolute;
+  top: 1.75rem;
+  right: 2rem;
+  z-index: 3010;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lightbox__close:hover {
+  opacity: 0.55;
+  transform: scale(1.06);
+}
+.lightbox__figure {
+  position: relative;
+  z-index: 3005;
+  margin: 0;
+  max-width: min(92vw, 1400px);
+  max-height: 88vh;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: scale(0.96) translateY(12px);
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lightbox.is-open .lightbox__img.is-ready {
+  opacity: 1;
+  transform: scale(1) translateY(0);
 }
 
 /* Panel Manifiesto */
@@ -1190,5 +1268,12 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   }
   .whatsapp-fab {
     opacity: 1;
+  }
+  .lightbox,
+  .lightbox__img {
+    transition: none;
+  }
+  .lightbox.is-open .lightbox__img.is-ready {
+    transform: none;
   }
 }

@@ -141,13 +141,13 @@ class MagneticCursor {
 
     // Delegación de eventos para aplicar el cursor grande en hovers
     document.body.addEventListener('mouseenter', (e) => {
-      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab')) {
+      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab, .gallery-item, .lightbox__close')) {
         this.el.classList.add('hover-large');
       }
     }, true);
 
     document.body.addEventListener('mouseleave', (e) => {
-      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab')) {
+      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab, .gallery-item, .lightbox__close')) {
         this.el.classList.remove('hover-large');
       }
     }, true);
@@ -659,7 +659,79 @@ class AppNavigation {
 }
 
 /* ══════════════════════════════════════════════════
-   6. TÍTULO EN LOOP (lectura lenta)
+   6. LIGHTBOX DE GALERÍA
+   ══════════════════════════════════════════════════ */
+class GalleryLightbox {
+  constructor() {
+    this.el = $('#lightbox');
+    this.img = $('#lightbox-img');
+    this.backdrop = $('#lightbox-backdrop');
+    this.closeBtn = $('#lightbox-close');
+    this.gallery = $('#galleryContainer');
+    if (!this.el || !this.img || !this.gallery) return;
+
+    this.isOpen = false;
+    this._bind();
+  }
+
+  _bind() {
+    this.gallery.addEventListener('click', (e) => {
+      const item = e.target.closest('.gallery-item');
+      if (!item || item.style.display === 'none') return;
+      const thumb = item.querySelector('img');
+      if (!thumb?.src) return;
+      this.open(thumb.src, thumb.alt || '');
+    });
+
+    this.closeBtn?.addEventListener('click', () => this.close());
+    this.backdrop?.addEventListener('click', () => this.close());
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) this.close();
+    });
+  }
+
+  open(src, alt = '') {
+    this.img.classList.remove('is-ready');
+    this.img.src = src;
+    this.img.alt = alt;
+
+    const reveal = () => {
+      requestAnimationFrame(() => {
+        this.img.classList.add('is-ready');
+      });
+    };
+
+    if (this.img.complete) {
+      reveal();
+    } else {
+      this.img.onload = () => reveal();
+    }
+
+    this.el.classList.add('is-open');
+    this.el.setAttribute('aria-hidden', 'false');
+    this.isOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  close() {
+    this.el.classList.remove('is-open');
+    this.el.setAttribute('aria-hidden', 'true');
+    this.img.classList.remove('is-ready');
+    this.isOpen = false;
+    document.body.style.removeProperty('overflow');
+
+    setTimeout(() => {
+      if (!this.isOpen) {
+        this.img.removeAttribute('src');
+        this.img.alt = '';
+      }
+    }, 550);
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   7. TÍTULO EN LOOP (lectura lenta)
    ══════════════════════════════════════════════════ */
 class TitleBrandLoop {
   constructor() {
@@ -720,6 +792,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar navegación principal de la App
     const navigation = new AppNavigation();
+
+    // Lightbox de la galería
+    new GalleryLightbox();
     
     // Mostrar el botón superior derecho de forma fluida una vez cargada la página
     const toggleBtn = $('#menu-toggle-btn');
