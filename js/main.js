@@ -153,54 +153,148 @@ class ContactForm {
 }
 
 /* ══════════════════════════════════════════════════
-   2. MAGNETIC CURSOR — SVG con seguimiento inercial
+   2. MAGNETIC CURSOR — punto + anillo con inercia
    ══════════════════════════════════════════════════ */
 class MagneticCursor {
   constructor() {
     this.el = $('#cursor');
-    if (!this.el) return;
+    this.dot = this.el?.querySelector('.cursor__dot');
+    this.ring = this.el?.querySelector('.cursor__ring');
+    if (!this.el || !this.dot || !this.ring) return;
 
     this.mouse = { x: -100, y: -100 };
-    this.pos   = { x: -100, y: -100 };
-    this.ease  = 0.15;
+    this.dotPos = { x: -100, y: -100 };
+    this.ringPos = { x: -100, y: -100 };
+    this.dotEase = 0.38;
+    this.ringEase = 0.12;
+    this.magnet = { x: 0, y: 0 };
+    this.targetMagnet = { x: 0, y: 0 };
+    this.activeTarget = null;
+    this.hasMoved = false;
+
+    this.revealSelector = '.menu-item, .nav-link';
+    this.hoverSelector = [
+      '.menu-item',
+      '.nav-link',
+      '.filter-btn',
+      '.top-right-btn',
+      '.bottom-link',
+      '.lang-btn',
+      '.contact-link',
+      '.contact-meta__link',
+      '.contact-submit',
+      '.credits-modal__close',
+      '.whatsapp-fab',
+      '.gallery-item',
+      '.lightbox__close',
+      'a[href]',
+      'button'
+    ].join(', ');
 
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
     if (this.reducedMotion || this.coarsePointer) {
       this.el.style.display = 'none';
-      document.body.style.cursor = 'auto';
       return;
     }
 
+    document.body.classList.add('has-custom-cursor');
     this._bind();
     this._loop();
   }
 
   _bind() {
-    document.addEventListener('mousemove', ({ clientX: x, clientY: y }) => {
-      this.mouse.x = x;
-      this.mouse.y = y;
+    document.addEventListener('mousemove', (e) => {
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
+
+      if (!this.hasMoved) {
+        this.hasMoved = true;
+        this.dotPos.x = e.clientX;
+        this.dotPos.y = e.clientY;
+        this.ringPos.x = e.clientX;
+        this.ringPos.y = e.clientY;
+        this.el.classList.add('is-active');
+      }
+
+      this._updateMagnet(e.clientX, e.clientY);
     }, { passive: true });
 
-    // Delegación de eventos para aplicar el cursor grande en hovers
-    document.body.addEventListener('mouseenter', (e) => {
-      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab, .gallery-item, .lightbox__close')) {
-        this.el.classList.add('hover-large');
-      }
-    }, true);
+    document.addEventListener('mouseleave', () => {
+      this.el.classList.add('is-hidden');
+    });
 
-    document.body.addEventListener('mouseleave', (e) => {
-      if (e.target.matches && e.target.matches('.nav-link, .filter-btn, .top-right-btn, .bottom-link, .lang-btn, .contact-link, .credits-modal__close, .whatsapp-fab, .gallery-item, .lightbox__close')) {
-        this.el.classList.remove('hover-large');
+    document.addEventListener('mouseenter', () => {
+      this.el.classList.remove('is-hidden');
+    });
+
+    document.body.addEventListener('mouseover', (e) => {
+      const reveal = e.target.closest?.(this.revealSelector);
+      const hover = e.target.closest?.(this.hoverSelector);
+
+      if (reveal) {
+        this.el.classList.add('is-reveal');
+        this.el.classList.remove('is-hover');
+        this._setTarget(reveal);
+        return;
       }
+
+      if (hover) {
+        this.el.classList.add('is-hover');
+        this.el.classList.remove('is-reveal');
+        this._setTarget(hover);
+        return;
+      }
+
+      this.el.classList.remove('is-hover', 'is-reveal');
+      this._setTarget(null);
     }, true);
   }
 
+  _setTarget(el) {
+    if (this.activeTarget && this.activeTarget !== el) {
+      this.activeTarget.classList.remove('is-cursor-target');
+    }
+    this.activeTarget = el;
+    if (el?.classList?.contains('menu-item')) {
+      el.classList.add('is-cursor-target');
+    }
+  }
+
+  _updateMagnet(x, y) {
+    if (!this.activeTarget) {
+      this.targetMagnet.x = 0;
+      this.targetMagnet.y = 0;
+      return;
+    }
+
+    const rect = this.activeTarget.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const strength = this.el.classList.contains('is-reveal') ? 0.22 : 0.14;
+
+    this.targetMagnet.x = (cx - x) * strength;
+    this.targetMagnet.y = (cy - y) * strength;
+  }
+
   _loop() {
-    this.pos.x += (this.mouse.x - this.pos.x) * this.ease;
-    this.pos.y += (this.mouse.y - this.pos.y) * this.ease;
-    this.el.style.transform = `translate3d(${this.pos.x}px, ${this.pos.y}px, 0)`;
+    this.magnet.x += (this.targetMagnet.x - this.magnet.x) * 0.16;
+    this.magnet.y += (this.targetMagnet.y - this.magnet.y) * 0.16;
+
+    const targetX = this.mouse.x + this.magnet.x;
+    const targetY = this.mouse.y + this.magnet.y;
+
+    this.dotPos.x += (targetX - this.dotPos.x) * this.dotEase;
+    this.dotPos.y += (targetY - this.dotPos.y) * this.dotEase;
+    this.ringPos.x += (targetX - this.ringPos.x) * this.ringEase;
+    this.ringPos.y += (targetY - this.ringPos.y) * this.ringEase;
+
+    this.dot.style.transform =
+      `translate3d(${this.dotPos.x}px, ${this.dotPos.y}px, 0) translate(-50%, -50%)`;
+    this.ring.style.transform =
+      `translate3d(${this.ringPos.x}px, ${this.ringPos.y}px, 0) translate(-50%, -50%)`;
+
     requestAnimationFrame(() => this._loop());
   }
 }

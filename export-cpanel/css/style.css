@@ -92,24 +92,111 @@ body {
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* ══ CURSOR MAGNÉTICO ══ */
+/* ══ CURSOR MAGNÉTICO / REVELACIÓN ══ */
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
 .cursor {
   position: fixed;
-  left: 0;
-  top: 0;
+  inset: 0;
+  width: 0;
+  height: 0;
   pointer-events: none;
   z-index: 9999;
-  transform: translate3d(-100px, -100px, 0);
-  transition: transform 0.08s linear;
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
-.cursor__circle {
-  transition: r 0.3s ease, fill 0.3s ease;
+
+.cursor.is-active {
+  opacity: 1;
 }
-.cursor.hover-large .cursor__circle {
-  r: 14;
-  fill: rgba(255, 255, 255, 0.12);
-  stroke: rgba(255, 255, 255, 0.5);
-  stroke-width: 0.5;
+
+.cursor.is-hidden {
+  opacity: 0;
+}
+
+.cursor__dot,
+.cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+}
+
+.cursor__dot {
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  z-index: 2;
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.35s ease,
+              background 0.35s ease;
+}
+
+.cursor__ring {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: transparent;
+  z-index: 1;
+  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease,
+              background 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.35s ease;
+}
+
+/* Hover interactivo: anillo medio */
+.cursor.is-hover .cursor__dot {
+  width: 5px;
+  height: 5px;
+  opacity: 0.85;
+}
+
+.cursor.is-hover .cursor__ring {
+  width: 72px;
+  height: 72px;
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Revelación editorial: círculo sólido con blend */
+.cursor.is-reveal .cursor__dot {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.cursor.is-reveal .cursor__ring {
+  width: 150px;
+  height: 150px;
+  border-color: transparent;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+body.on-contact .cursor__dot {
+  background: #000000;
+}
+
+body.on-contact .cursor__ring {
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+body.on-contact .cursor.is-hover .cursor__ring {
+  border-color: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+body.on-contact .cursor.is-reveal .cursor__ring {
+  background: #000000;
+  border-color: transparent;
 }
 
 /* ══ LOADER (LÍNEA SUPERIOR) ══ */
@@ -350,18 +437,29 @@ body {
   font-family: var(--font-sans);
   font-weight: 100;
   font-size: clamp(2.4rem, 6vw, 5rem);
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
   letter-spacing: 0.04em;
   line-height: 0.95;
   text-transform: uppercase;
-  transition: var(--transition-smooth);
+  transition: color 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              font-family 0.01s linear,
+              font-style 0.01s linear,
+              font-weight 0.01s linear;
   display: inline-block;
   transform-origin: right center;
+  position: relative;
+  z-index: 2;
 }
-.main-menu .menu-item:hover {
-  color: var(--color-text);
-  transform: translateX(-8px);
+.main-menu .menu-item:hover,
+.main-menu .menu-item.is-cursor-target {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: #ffffff;
+  transform: translateX(-10px);
+  letter-spacing: 0.01em;
 }
 
 /* Barra inferior */
@@ -1354,6 +1452,17 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
     max-width: 14rem;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Sin cursor custom en táctil */
+@media (hover: none), (pointer: coarse) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * {
+    cursor: auto !important;
+  }
+  .cursor {
+    display: none !important;
   }
 }
 
