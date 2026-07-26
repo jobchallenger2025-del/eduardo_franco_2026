@@ -1449,7 +1449,8 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
   body.has-custom-cursor * {
     cursor: auto !important;
   }
-  .cursor {
+  .cursor,
+  .circulo-cursor {
     display: none !important;
   }
 }
