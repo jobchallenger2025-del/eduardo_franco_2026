@@ -37,7 +37,8 @@ const TRANSLATIONS = {
     'heading-contact': 'Empecemos algo.',
     'label-email': 'Email',
     'label-location': 'Ubicación',
-    'val-location': 'Bogotá, Colombia / Global',
+    'label-phone': 'Cel',
+    'val-location': 'Bogotá, Colombia',
     'credits-title': 'CRÉDITOS',
     'credits-p1': '© 2026 Eduardo Franco. Todos los derechos reservados.',
     'credits-p2': 'Concepto y diseño inspirado en el minimalismo editorial.',
@@ -68,7 +69,8 @@ const TRANSLATIONS = {
     'heading-contact': 'Let\'s start something.',
     'label-email': 'Email',
     'label-location': 'Location',
-    'val-location': 'Bogota, Colombia / Global',
+    'label-phone': 'Cell',
+    'val-location': 'Bogota, Colombia',
     'credits-title': 'CREDITS',
     'credits-p1': '© 2026 Eduardo Franco. All rights reserved.',
     'credits-p2': 'Concept and design inspired by editorial minimalism.',
@@ -314,9 +316,27 @@ class AppNavigation {
     this.currentIndex = 0;
     this.panelCount = this.panels.length;
     this.isMenuOpen = true;
+    this.mobileQuery = window.matchMedia('(max-width: 768px)');
+    this._onViewportChange = () => this._syncLayoutMode();
 
     this._bind();
     this._loadGalleryImages();
+    this._syncLayoutMode();
+  }
+
+  _isMobileLayout() {
+    return this.mobileQuery?.matches ?? window.innerWidth <= 768;
+  }
+
+  _syncLayoutMode() {
+    if (!this.container) return;
+
+    if (this._isMobileLayout()) {
+      this.container.style.transform = 'none';
+      this._updateContactStateFromScroll();
+    } else {
+      this.goToPanel(this.currentIndex);
+    }
   }
 
   _bind() {
@@ -393,12 +413,84 @@ class AppNavigation {
       creditsModal.classList.remove('active');
       creditsModal.setAttribute('aria-hidden', 'true');
     });
+
+    // Desktop ↔ móvil: quitar translateX o restaurar slide
+    if (this.mobileQuery?.addEventListener) {
+      this.mobileQuery.addEventListener('change', this._onViewportChange);
+    } else {
+      this.mobileQuery?.addListener(this._onViewportChange);
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!this._isMobileLayout()) return;
+      this._updateContactStateFromScroll();
+    }, { passive: true });
+  }
+
+  _updateContactStateFromScroll() {
+    const contact = $('#panel-contacto');
+    if (!contact) return;
+
+    const rect = contact.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight * 0.45 && rect.bottom > 80;
+    document.body.classList.toggle('on-contact', inView);
+
+    // Estado del botón según el panel más visible
+    let activeIndex = 0;
+    let bestVisible = 0;
+    this.panels.forEach((panel, i) => {
+      const r = panel.getBoundingClientRect();
+      const visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+      if (visible > bestVisible) {
+        bestVisible = visible;
+        activeIndex = i;
+      }
+    });
+
+    this.currentIndex = activeIndex;
+    if (activeIndex === 0) {
+      this.menuToggleBtn.dataset.viewState = 'home';
+      if (this.isMenuOpen) {
+        this.slideshowOverlay.style.opacity = '0.96';
+      } else {
+        this.slideshowOverlay.style.opacity = '0.25';
+      }
+    } else {
+      this.menuToggleBtn.dataset.viewState = 'inner';
+      this.slideshowOverlay.style.opacity = '0.98';
+    }
+    syncToggleLabel();
   }
 
   goToPanel(index) {
     if (index < 0 || index >= this.panelCount) return;
-    
+
     this.currentIndex = index;
+
+    // Móvil: scroll vertical nativo (sin deslizamiento lateral)
+    if (this._isMobileLayout()) {
+      this.container.style.transform = 'none';
+      this.panels[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const isContact = this.panels[index]?.id === 'panel-contacto';
+      document.body.classList.toggle('on-contact', isContact);
+
+      if (index === 0) {
+        this.menuToggleBtn.dataset.viewState = 'home';
+        if (this.isMenuOpen) {
+          this.slideshowOverlay.style.opacity = '0.96';
+        } else {
+          this.slideshowOverlay.style.opacity = '0.25';
+        }
+        syncToggleLabel();
+      } else {
+        this.menuToggleBtn.dataset.viewState = 'inner';
+        syncToggleLabel();
+        this.slideshowOverlay.style.opacity = '0.98';
+      }
+      return;
+    }
+
     const translateX = -index * 100;
     this.container.style.transform = `translateX(${translateX}vw)`;
 
