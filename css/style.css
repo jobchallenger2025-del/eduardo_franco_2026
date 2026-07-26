@@ -880,7 +880,7 @@ body.on-contact .top-right-btn:hover {
 .whatsapp-fab {
   position: fixed;
   right: 2rem;
-  bottom: 2rem;
+  bottom: 5.75rem;
   z-index: 1500;
   text-decoration: none;
   color: var(--color-text);
@@ -1306,7 +1306,7 @@ body.on-contact .whatsapp-fab:focus-visible .whatsapp-fab__pill {
 
   .whatsapp-fab {
     right: 1.15rem;
-    bottom: 1.15rem;
+    bottom: 4.85rem;
   }
 
   .whatsapp-fab__pill {
