@@ -977,6 +977,14 @@ body.on-contact .top-right-btn:hover {
   transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 
+/* Oculto solo en el slide Trabajos; visible en Home y el resto */
+body.on-trabajos .whatsapp-fab {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+  animation: none;
+}
+
 .whatsapp-fab__pill {
   display: inline-flex;
   flex-direction: row-reverse;

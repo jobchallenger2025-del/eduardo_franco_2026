@@ -474,13 +474,13 @@ class AppNavigation {
     this._loadGalleryImages();
     this._activateCategoryFilter('alimentos');
     this._syncLayoutMode();
-    this._syncHomeMenuVisibility();
+    this._syncWhatsAppVisibility();
   }
 
-  _syncHomeMenuVisibility() {
-    // WhatsApp se oculta solo cuando el menú del Home está a la vista
-    const menuVisible = this.isMenuOpen && this.currentIndex === 0;
-    document.body.classList.toggle('home-menu-visible', menuVisible);
+  _syncWhatsAppVisibility() {
+    // WhatsApp visible en Home y demás slides; oculto solo en Trabajos
+    const onTrabajos = this.panels[this.currentIndex]?.id === 'panel-trabajos';
+    document.body.classList.toggle('on-trabajos', !!onTrabajos);
   }
 
   _isMobileLayout() {
@@ -618,7 +618,7 @@ class AppNavigation {
       this.menuToggleBtn.dataset.viewState = 'inner';
       this.slideshowOverlay.style.opacity = '0.98';
     }
-    this._syncHomeMenuVisibility();
+    this._syncWhatsAppVisibility();
     syncToggleLabel();
   }
 
@@ -653,7 +653,7 @@ class AppNavigation {
         syncToggleLabel();
         this.slideshowOverlay.style.opacity = '0.98';
       }
-      this._syncHomeMenuVisibility();
+      this._syncWhatsAppVisibility();
       return;
     }
 
@@ -681,7 +681,7 @@ class AppNavigation {
       this.slideshowOverlay.style.opacity = '0.98';
     }
 
-    this._syncHomeMenuVisibility();
+    this._syncWhatsAppVisibility();
   }
 
   toggleMenu() {
@@ -697,7 +697,7 @@ class AppNavigation {
     this.heroWrapper.classList.remove('menu-hidden');
     if (this.decorDot) this.decorDot.classList.remove('menu-hidden');
     this.slideshowOverlay.style.opacity = '0.96';
-    this._syncHomeMenuVisibility();
+    this._syncWhatsAppVisibility();
     if (this.currentIndex === 0) syncToggleLabel();
   }
 
@@ -706,7 +706,7 @@ class AppNavigation {
     this.heroWrapper.classList.add('menu-hidden');
     if (this.decorDot) this.decorDot.classList.add('menu-hidden');
     this.slideshowOverlay.style.opacity = '0.25';
-    this._syncHomeMenuVisibility();
+    this._syncWhatsAppVisibility();
     if (this.currentIndex === 0) syncToggleLabel();
   }
 
