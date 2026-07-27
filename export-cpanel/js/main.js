@@ -713,7 +713,7 @@ class AppNavigation {
   _loadGalleryImages() {
     if (!this.galleryContainer) return;
 
-    const BASE = '/fotografia';
+    const BASE = 'https://eduardofranco.com.co/fotografia';
 
     const imagePaths = {
       alimentos: [
